@@ -1,0 +1,10 @@
+# Ignore Terraform's internal binaries and plugins
+.terraform/
+.terraform.lock.hcl
+
+# Ignore state files (which contain sensitive data)
+*.tfstate
+*.tfstate.backup
+
+# Ignore Mac system files
+.DS_Store
