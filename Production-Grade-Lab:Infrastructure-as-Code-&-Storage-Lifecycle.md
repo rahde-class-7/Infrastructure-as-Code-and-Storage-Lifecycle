@@ -8,7 +8,41 @@ You are building a high-availability rendering service. The production environme
 
 ---
 
-### **Phase 1: The Production Architecture**
+### **Phase 1: Preparing The Infrastructure**
+Phase one of this lab is intializing the google cloud within the terminal so we can exicute commands within the CLI to interact with Google Cloud.
+
+At the same time within VScode files are sit up in an directory. Added O-authentication, 1-backend, main.tf, and variables.tf
+
+Connecting the terminal to google cloud
+gcloud init
+
+Setting up terraform for google cloud
+Add terraform config files
+0-athentication
+Modified the provider block
+Region = us-east4
+Project = class-seven-point
+
+Used this command to figure out my current region
+gcloud config get-value compute/region
+
+Used this command to figure out current project
+gcloud config get-value project
+
+
+Created google cloud bucket to add the backend
+Did this in the google cloud onsole
+
+Created two additional folders
+Backend
+Variables
+main.tf
+
+Terraform apply
+
+---
+
+### **Phase 2: The Production Architecture**
 A production setup separates the **Operating System**, the **Application Data**, and the **Fast Cache**.
 
 * **Boot Disk:** 50GB (Balanced PD) – Balanced cost/performance for OS.
@@ -19,7 +53,7 @@ A production setup separates the **Operating System**, the **Application Data**,
 
 ---
 
-### **Phase 2: Defining the Infrastructure (Terraform)**
+### **Phase 3: Defining the Infrastructure (Terraform)**
 In a production environment, you would use a `.tf` file. This ensures that if the instance is deleted, the data disk is preserved via the `lifecycle` block.
 
 ```hcl
@@ -69,7 +103,7 @@ resource "google_compute_instance" "prod_vm" {
 
 ---
 
-### **Phase 3: Production OS Configuration (The "Golden Image" Steps)**
+### **Phase 4: Production OS Configuration (The "Golden Image" Steps)**
 When you attach a disk in production, you must ensure it remounts automatically after a reboot using the **UUID**.
 
 1.  **SSH into the instance.**
@@ -86,7 +120,7 @@ When you attach a disk in production, you must ensure it remounts automatically 
 
 ---
 
-### **Phase 4: Security & Governance**
+### **Phase 5: Security & Governance**
 
 * **IAM Roles:** Ensure the Service Account attached to the VM has the minimum required permissions (`roles/compute.storageAdmin` is usually too broad; use custom roles for mounting).
 * **Snapshots:** In production, you must automate backups.

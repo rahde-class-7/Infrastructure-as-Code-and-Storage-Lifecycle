@@ -1,3 +1,15 @@
+  # Resource for the Persistent Data Disk
+resource "google_compute_disk" "data_disk" {
+  name  = "prod-render-data-disk"
+  type  = "pd-ssd"
+  zone  = "us-east4-a"
+  size  = 200
+  labels = {
+    environment = "production"
+    team        = "rendering"
+  }
+}
+
 # Resource for the VM Instance
 resource "google_compute_instance" "prod_vm" {
   name         = "prod-render-vm-01"
@@ -11,18 +23,6 @@ resource "google_compute_instance" "prod_vm" {
       type  = "pd-balanced"
     }
   }
-
-  # Resource for the Persistent Data Disk
-resource "google_compute_disk" "data_disk" {
-  name  = "prod-render-data-disk"
-  type  = "pd-ssd"
-  zone  = "us-east4-a"
-  size  = 200
-  labels = {
-    environment = "production"
-    team        = "rendering"
-  }
-}
 
   # Attaching the independent data disk
   attached_disk {
